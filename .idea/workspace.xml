@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e59ddad4-58e1-4fd7-9897-46d00f28059e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/Server/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/.idea/Sinabro.com.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/app/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/app/docs/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/app/models/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/app/models/account.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/app/models/post.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/app/views/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/config/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/config/dev.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/Server/server.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sinabro.com-Back-End/Sinabro.com-Back-End/readme.md" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,11 +22,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Server/config/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="585">
+              <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -50,7 +34,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
@@ -85,8 +69,8 @@
         <option value="$PROJECT_DIR$/Server/config/dev.py" />
         <option value="$PROJECT_DIR$/Server/app/views/__init__.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/Server/config/__init__.py" />
         <option value="$PROJECT_DIR$/Server/app/__init__.py" />
+        <option value="$PROJECT_DIR$/Server/config/__init__.py" />
       </list>
     </option>
   </component>
@@ -419,22 +403,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/config/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/app/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/config/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -34,3 +34,8 @@ class Config:
         },
         'basePath': '/ '
     }
+
+    SWAGGER_TEMPLATE = {
+        'schemes': [],
+        'tags': []
+    }
