@@ -22,3 +22,15 @@ class Config:
         'db': SERVICE_NAME_UPPER,
         'password': os.getenv('MONGO_PW_SINABRODOTCOM')
     }
+    SWAGGER = {
+        'title': SERVICE_NAME,
+        'specs_route': '/docs',
+        'uiversion': 3,
+
+        'info': {
+            'title': SERVICE_NAME + ' API',
+            'version': '1.0',
+            'description': ''
+        },
+        'basePath': '/ '
+    }
