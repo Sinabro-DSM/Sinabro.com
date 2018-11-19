@@ -22,6 +22,7 @@ class Signup(BaseResource):
         name = request.json['name']
         isAdmin = request.json['isAdmin']
 
+        
         if AccountModel.objects(email=email):
             return {'msg': 'email duplicated'}, 409
         else:
