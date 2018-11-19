@@ -68,14 +68,23 @@ def auth_required(fn):
     return wrapper
 
 
-def json_required(fn):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        if not request.is_json:
-            abort(406)
-        return fn(*args, **kwargs)
+def json_required(required_keys):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if not request.is_json:
+                abort(406)
 
-    return wrapper
+            for key, typ in required_keys.items():
+                if key not in request.json or not type(request.json[key]) is typ:
+                    abort(400)
+                if typ is str and not request.json[key]:
+                    abort(400)
+            return fn(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
 
 
 class BaseResource(Resource):
@@ -97,4 +106,8 @@ class Router(object):
             self.init_app(app)
 
     def init_app(self, app):
-        pass
+        app.after_request(after_request)
+        app.register_error_handler(Exception, exception_handler)
+
+        from app.views.user import signup
+        app.register_blueprint(signup.api.blueprint)

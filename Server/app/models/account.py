@@ -6,9 +6,11 @@ class TempAccountModel(Document):
         'collection': 'user_temp'
     }
     email = StringField(required=True, primary_key=True)
+
     pwd = StringField(required=True)
     name = StringField(required=True)
     certify_uri = StringField(required=True)
+    isAdmin = BooleanField(default=False)
 
 
 class AccountModel(Document):
@@ -22,7 +24,7 @@ class AccountModel(Document):
 
     bio = StringField(required=True, default='')
 
-    isAdmin = BooleanField(required=True, default='')
+    isAdmin = BooleanField(default='')
 
 
 class CertifyCodeModel(Document):

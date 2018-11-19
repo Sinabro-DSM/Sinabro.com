@@ -22,7 +22,7 @@ def create_app(*config_cls):
     CORS().init_app(app_)
     JWTManager().init_app(app_)
     Router().init_app(app_)
-    Swagger(template=app_.config['SWAGGER_TAMPLATE']).init_app(app_)
+    Swagger(template=app_.config['SWAGGER_TEMPLATE']).init_app(app_)
 
     connect(**app_.config['MONGODB_SETTINGS'])
 

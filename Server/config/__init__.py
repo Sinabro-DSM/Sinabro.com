@@ -7,8 +7,8 @@ class Config:
     SERVICE_NAME_UPPER = SERVICE_NAME.upper()
     SECRET_KEY = os.getenv('SECRET_KEY', 'qwerdagkjliouqrwe')
 
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=30)
-    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=365)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=1)
+    JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     JWT_HEADER_TYPE = 'JWT'
 
     RUN_SETTING = {
@@ -36,6 +36,21 @@ class Config:
     }
 
     SWAGGER_TEMPLATE = {
-        'schemes': [],
-        'tags': []
+        'schemes': [
+            'http'
+        ],
+        'tags': [
+            {
+                'name': '계정',
+                'description': '계정관리 api'
+            },
+            {
+                'name': '게시글',
+                'description': '게시글 관련 api'
+            },
+            {
+                'name': '답글',
+                'description': '답글 관련 api'
+            }
+        ]
     }
