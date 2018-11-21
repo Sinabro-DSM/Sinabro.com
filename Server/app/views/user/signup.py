@@ -62,4 +62,4 @@ class EmailCertify(BaseResource):
         user.delete()
         AccountModel(email=email, pwd=pwd, name=name, isAdmin=isAdmin).save()
 
-        return Response('success', 200)
+        return Response('success', 201)
