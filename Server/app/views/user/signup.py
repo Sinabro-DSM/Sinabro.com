@@ -22,7 +22,6 @@ class Signup(BaseResource):
         name = request.json['name']
         isAdmin = request.json['isAdmin']
 
-        
         if AccountModel.objects(email=email):
             return {'msg': 'email duplicated'}, 409
         else:
@@ -31,23 +30,21 @@ class Signup(BaseResource):
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
-
             smtp.login('sinabrocommunity@gmail.com', 'sinabroisbest')
+
             certify_uri = str(uuid.uuid4()).replace("-", "")
 
             temp = TempAccountModel(email=email, pwd=pwd, name=name, certify_uri=certify_uri, isAdmin=isAdmin)
             temp.save()
 
-            html = '<a href=http://localhost:5050/certify/{}">인증하기</a>'.format(certify_uri)
+            html = '<a href=http://localhost:5050/certify/{}>인증하기</a>'.format(certify_uri)
             msg = MIMEText(html, 'html')
-
             body = MIMEMultipart()
             body['From'] = 'rsy011203@gmail.com'
             body['To'] = email
 
             body.attach(msg)
-            smtp.sendmail('rsy011203@gmail.com', email,
-                          msg=body.as_string())
+            smtp.sendmail('rsy011203@gmail.com', email, msg=body.as_string())
             smtp.quit()
             print("성공")
 
