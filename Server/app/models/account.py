@@ -33,3 +33,12 @@ class CertifyCodeModel(Document):
     }
     email = StringField(required=True)
     certify_code = StringField(required=True)
+
+
+class RefreshTokenModel(Document):
+    meta = {
+        'collection': 'refresh_token'
+    }
+    token_owner = ReferenceField(AccountModel, required=True)
+    token_uuid = StringField(primary_key=True)
+    pwd_snapshot = StringField()
