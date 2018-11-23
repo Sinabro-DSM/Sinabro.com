@@ -14,7 +14,7 @@ api = Api(Blueprint(__name__, __name__))
 
 @api.resource('/signup')
 class Signup(BaseResource):
-    @swag_from('SignUp')
+    @swag_from()
     @json_required({'email': str, 'pwd': str, 'name': str, 'isAdmin': bool})
     def post(self):
         email = request.json['email']
