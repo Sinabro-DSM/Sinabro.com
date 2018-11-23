@@ -5,11 +5,15 @@ class TempAccountModel(Document):
     meta = {
         'collection': 'user_temp'
     }
+
     email = StringField(required=True, primary_key=True)
 
     pwd = StringField(required=True)
+
     name = StringField(required=True)
+
     certify_uri = StringField(required=True)
+
     isAdmin = BooleanField(default=False)
 
 
