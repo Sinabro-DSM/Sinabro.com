@@ -1,8 +1,6 @@
-from app.views.user.signup import Signup
-
-Signup = {
+SIGNUP = {
     'tags': ['계정'],
-    'description': '회원가입 이메일 인증 전 정보입력.',
+    'description': '서비스 회원가입 API',
     'parameters': [
         {
             'name': 'email',
@@ -31,6 +29,19 @@ Signup = {
             'in': 'json',
             'type': 'str',
             'required': False
+        }
+    ]
+}
+CERTIFY_EMAIL = {
+    'tags': ['계정'],
+    'description': '이메일 인증 API',
+    'parameters': [
+        {
+            'name': 'certify_uri',
+            'description': '이메일로 전송된 인증코드 ',
+            'in': 'json',
+            'type': 'str',
+            'required': True
         }
     ]
 }
