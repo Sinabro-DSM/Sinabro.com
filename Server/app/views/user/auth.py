@@ -4,6 +4,7 @@ from flask_restful import Api
 from flask_jwt_extended import create_access_token, create_refresh_token
 from app.views import BaseResource
 from app.models.account import AccountModel, RefreshTokenModel
+from flasgger import swag_from
 
 api = Api(Blueprint(__name__, __name__))
 
@@ -20,8 +21,9 @@ def generate_refresh_token(user):
     return refresh_token
 
 
-@api.resource('/login')
+@api.resource('/auth')
 class Auth(BaseResource):
+    @swag_from('AUTH')
     def post(self):
 
         email = request.json['email']
