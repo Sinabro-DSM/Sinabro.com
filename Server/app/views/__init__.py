@@ -105,9 +105,11 @@ class Router(object):
         if app is not None:
             self.init_app(app)
 
+
     def init_app(self, app):
         app.after_request(after_request)
         app.register_error_handler(Exception, exception_handler)
 
-        from app.views.user import signup
+        from app.views.user import signup, auth
         app.register_blueprint(signup.api.blueprint)
+        app.register_blueprint(auth.api.blueprint)
