@@ -8,13 +8,14 @@ from email.mime.text import MIMEText
 
 from app.models.account import AccountModel, TempAccountModel
 from app.views import json_required, BaseResource
+from app.docs.signup import SIGNUP, CERTIFY_EMAIL
 
 api = Api(Blueprint(__name__, __name__))
 
 
 @api.resource('/signup')
 class Signup(BaseResource):
-    @swag_from('SINGUP')
+    @swag_from(SIGNUP)
     @json_required({'email': str, 'pwd': str, 'name': str, 'isAdmin': bool})
     def post(self):
         email = request.json['email']
@@ -53,7 +54,7 @@ class Signup(BaseResource):
 
 @api.resource('/certify/<certify_uri>')
 class EmailCertify(BaseResource):
-    @swag_from('CERTIFY_EMAIL')
+    @swag_from(CERTIFY_EMAIL)
     def get(self, certify_uri):
         user = TempAccountModel.objects(certify_uri=certify_uri).first()
 

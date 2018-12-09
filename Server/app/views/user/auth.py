@@ -2,9 +2,12 @@ from flask import request, Response, Blueprint, abort
 import uuid
 from flask_restful import Api
 from flask_jwt_extended import create_access_token, create_refresh_token
+from flasgger import swag_from
+
 from app.views import BaseResource
 from app.models.account import AccountModel, RefreshTokenModel
-from flasgger import swag_from
+from app.docs.auth import AUTH
+
 
 api = Api(Blueprint(__name__, __name__))
 
@@ -23,7 +26,7 @@ def generate_refresh_token(user):
 
 @api.resource('/auth')
 class Auth(BaseResource):
-    @swag_from('AUTH')
+    @swag_from(AUTH)
     def post(self):
 
         email = request.json['email']
