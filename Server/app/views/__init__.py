@@ -109,7 +109,7 @@ class Router(object):
         app.after_request(after_request)
         app.register_error_handler(Exception, exception_handler)
 
-        from app.views.user import signup, auth, change_pwd
+        from app.views.user import signup, auth, account
         app.register_blueprint(signup.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
-        app.register_blueprint(change_pwd.api.blueprint)
+        app.register_blueprint(account.api.blueprint)
