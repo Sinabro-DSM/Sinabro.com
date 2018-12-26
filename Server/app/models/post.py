@@ -3,26 +3,35 @@ from datetime import datetime
 from mongoengine import *
 from app.models.account import AccountModel
 
-class PostBase(Document):
+
+class CategoryModel(Document):
+    meta = {
+        'collection': 'category_model'
+    }
+    name = StringField(required=True)
+    id = IntField(primary_key=True)
+
+
+class PostModel(Document):
     meta = {
         'collection': 'post_model'
     }
     creation_time = DateTimeField(required=True, default=datetime.now())
 
-    owner = ReferenceField(AccountModel, required=True)
+    owner = ReferenceField(AccountModel)
     title = StringField(required=True)
     content = StringField(required=True)
-    category = StringField(required=True)
+    category = ReferenceField(CategoryModel, default=0)
 
-    image_name = StringField()
+    image_name = ListField(StringField())
 
 
 class CommentModel(Document):
     mata = {
         'collection': 'comment_model'
     }
-    post = ReferenceField()
+    post = ReferenceField(PostModel)
     creation_time = DateTimeField(required=True, default=datetime.now())
-    owner = ReferenceField(required=True)
+    owner = ReferenceField(AccountModel, required=True)
     content = StringField(required=True)
 

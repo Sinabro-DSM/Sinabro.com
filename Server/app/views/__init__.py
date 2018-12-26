@@ -56,18 +56,6 @@ def gzip(fn):
     return wrapper
 
 
-def auth_required(fn):
-    @wraps(fn)
-    @jwt_required
-    def wrapper(*args, **kwargs):
-        user = AccountModel.objects(id=get_jwt_identity()).first()
-        if not user:
-            abort(403)
-        return fn(*args, **kwargs)
-
-    return wrapper
-
-
 def json_required(required_keys):
     def decorator(fn):
         @wraps(fn)
@@ -92,11 +80,12 @@ class BaseResource(Resource):
         self.now = time.strftime('%Y-%m-%d %H:%M:%S')
 
     @classmethod
-    def unicode_safe_json_response(cls, data, status_code=200):
+    def unicode_safe_json_response(cls, data, status_code=200, **kwargs):
         return Response(
             ujson.dumps(data, ensure_ascii=False),
             status_code,
-            content_type='application/json; charset=utf8'
+            content_type='application/json; charset=utf8',
+            **kwargs
         )
 
 
@@ -110,6 +99,8 @@ class Router(object):
         app.register_error_handler(Exception, exception_handler)
 
         from app.views.user import signup, auth, account
+        from app.views.post import post
         app.register_blueprint(signup.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
         app.register_blueprint(account.api.blueprint)
+        app.register_blueprint(post.api.blueprint)
