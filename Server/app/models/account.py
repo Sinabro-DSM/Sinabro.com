@@ -21,7 +21,7 @@ class AccountModel(Document):
     meta = {
         'collection': 'user_account'
     }
-    id = StringField(required=True, primary_key=True)
+    email = StringField(required=True, primary_key=True)
     pwd = StringField(required=True)
 
     name = StringField(required=True)
