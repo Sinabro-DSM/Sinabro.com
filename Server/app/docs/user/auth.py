@@ -16,6 +16,20 @@ AUTH = {
             'type': 'str',
             'required': True
         }
-    ]
+    ],
+    'responses': {
+        '200': {
+            'description': '로그인 성공',
+            'examples': {
+                '': {
+                    'access_token': '액세스 토큰',
+                    'refresh_token': '리프레시 토큰'
+                }
+            }
+        },
+        '401': {
+            'description': '로그인 실패'
+        }
+    }
 }
 

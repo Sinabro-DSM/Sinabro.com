@@ -30,7 +30,15 @@ SIGNUP = {
             'type': 'str',
             'required': False
         }
-    ]
+    ],
+    'responses': {
+        '200': {
+            'description': '인증 메일 수신 완료'
+        },
+        '409': {
+            'description': '중복된 이메일'
+        }
+    }
 }
 CERTIFY_EMAIL = {
     'tags': ['계정'],
@@ -43,5 +51,13 @@ CERTIFY_EMAIL = {
             'type': 'str',
             'required': True
         }
-    ]
+    ],
+    'responses': {
+        '201': {
+            'description': '회원가입 완료'
+        },
+        '404': {
+            'description': '존재하지 않는 유저'
+        }
+    }
 }

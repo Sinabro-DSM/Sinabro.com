@@ -1,4 +1,4 @@
-from flask import request, Response, Blueprint, abort
+from flask import request, Response, Blueprint
 import uuid
 from flask_restful import Api
 from flask_jwt_extended import create_access_token, create_refresh_token
@@ -6,7 +6,7 @@ from flasgger import swag_from
 
 from app.views import BaseResource
 from app.models.account import AccountModel, RefreshTokenModel
-from app.docs.auth import AUTH
+from app.docs.user.auth import AUTH
 
 
 api = Api(Blueprint(__name__, __name__))
@@ -40,7 +40,7 @@ class Auth(BaseResource):
                 'refresh_token': create_refresh_token(generate_refresh_token(user))
             }, 200
         else:
-            abort(401)
+            return Response('login failed', 401)
 
 
 
