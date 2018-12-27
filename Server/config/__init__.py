@@ -24,7 +24,7 @@ class Config:
     }
     SWAGGER = {
         'title': SERVICE_NAME,
-        'specs_route': '/docs',
+        'specs_route': '/docs/',
         'uiversion': 3,
 
         'info': {
@@ -32,7 +32,8 @@ class Config:
             'version': '1.0',
             'description': ''
         },
-        'basePath': '/docs'
+        'host': '{}.{}'.format('localhost', 5050),
+        'basePath': '/'
     }
 
     SWAGGER_TEMPLATE = {

@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, request, abort, current_app
+from flask import Blueprint, Response, request
 from flask_restful import Api
 from flasgger import swag_from
 from email.mime.multipart import MIMEMultipart
@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 
 from app.models.account import AccountModel, TempAccountModel
 from app.views import json_required, BaseResource
-from app.docs.signup import SIGNUP, CERTIFY_EMAIL
+from app.docs.user.signup import SIGNUP, CERTIFY_EMAIL
 
 api = Api(Blueprint(__name__, __name__))
 

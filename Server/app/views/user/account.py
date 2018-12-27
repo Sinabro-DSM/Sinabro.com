@@ -1,17 +1,18 @@
-from flask import request, Response, abort, Blueprint, Flask
+from flask import request, Response, abort, Blueprint
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity
 from flasgger import swag_from
 
 from app.views import BaseResource
 from app.models.account import AccountModel
+from app.docs.user.account import CHANGE_PWD
 
 api = Api(Blueprint(__name__, __name__))
 
 
 @api.resource("/change/pwd")
 class Account(BaseResource):
-    @swag_from()
+    @swag_from(CHANGE_PWD)
     def patch(self):
 
         user = AccountModel.objects(get_jwt_identity()).first()
