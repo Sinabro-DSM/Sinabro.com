@@ -25,6 +25,7 @@ class Image(BaseResource):
             names.append(image_name)
         return names, 201
 
+
 @api.resource('/post')
 class Post(BaseResource):
     @jwt_required
@@ -37,9 +38,9 @@ class Post(BaseResource):
         image_names = request.json['image_names']
 
         category = CategoryModel.objects(id=category_int).first()
-        print("asf")
-        user = AccountModel.objects(id=get_jwt_identity()).first()
-        print("asf")
+
+        user = AccountModel.objects(email=get_jwt_identity()).first()
+        
         post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=image_names).save()
 
         return str(post.id)
