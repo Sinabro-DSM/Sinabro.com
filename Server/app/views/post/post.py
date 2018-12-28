@@ -1,3 +1,4 @@
+from flask import Flask
 from flask import Response, request, Blueprint, g
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -23,7 +24,9 @@ class Image(BaseResource):
 
             image.save('./static/img/{0}'.format(image.filename))
             names.append(image_name)
+
         return names, 201
+
 
 @api.resource('/post')
 class Post(BaseResource):
