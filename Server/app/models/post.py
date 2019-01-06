@@ -27,7 +27,7 @@ class PostModel(Document):
 
 
 class CommentModel(Document):
-    mata = {
+    meta = {
         'collection': 'comment_model'
     }
     post = ReferenceField(PostModel)

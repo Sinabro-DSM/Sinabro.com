@@ -40,9 +40,7 @@ class Post(BaseResource):
         image_names = request.json['image_names']
 
         category = CategoryModel.objects(id=category_int).first()
-
         user = AccountModel.objects(email=get_jwt_identity()).first()
-        
-        post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=image_names).save()
 
+        post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=image_names).save()
         return str(post.id)
