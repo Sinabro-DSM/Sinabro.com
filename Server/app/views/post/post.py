@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Response, request, Blueprint, g
+from flask import Response, request, Blueprint, jsonify
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from uuid import uuid4
@@ -44,3 +44,16 @@ class Post(BaseResource):
 
         post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=image_names).save()
         return str(post.id)
+
+    def get(self):
+        page = int(request.args['page'])
+        category = request.args['category']
+
+        return jsonify([{
+            'post_id': str(postContent.id),
+            'creation_time': str(postContent.creation_time),
+            'content': postContent.content,
+            'title': postContent.title,
+            'category': postContent.category.id,
+            'author': postContent.owner.name
+        } for postContent in PostModel.objects(category=category).skip((page-1)*20).limit(20)])
