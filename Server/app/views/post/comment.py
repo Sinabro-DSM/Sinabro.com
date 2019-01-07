@@ -28,3 +28,9 @@ class Comment(BaseResource):
         comment = CommentModel(content=content, owner=user, post=post).save()
 
         return Response('success', 201)
+
+    def delete(self):
+        """
+        댓글 삭제
+        :return:
+        """
