@@ -29,8 +29,11 @@ class Comment(BaseResource):
 
         return Response('success', 201)
 
-    def delete(self):
+    def delete(self, post_id: str):
         """
         댓글 삭제
-        :return:
         """
+        post = PostModel.objects(id=post_id).first()
+        if not post:
+            return Response('', 410)
+
