@@ -88,13 +88,27 @@ class PostContent(BaseResource):
             } for comment in comments]
         })
 
-    def delete(self):
+    @jwt_required
+    def delete(self, post_id: str) -> Response:
         """
         게시물 삭제
-        :return:
         """
+        post = PostModel.objects(id=post_id).first()
+        if not post:
+            return Response('', 410)
+
+        author = AccountModel.objects(email=get_jwt_identity()).first()
+
+        # 삭제요청자
+
+        if author == post.owner:
+            post.delete()
+            return Response("success", 200)
+
+        return Response('fail', 401)
+
     def patch(self):
         """
         게시물 수정
-        :return:
         """
+
