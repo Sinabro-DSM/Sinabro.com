@@ -76,7 +76,10 @@ class PostContent(BaseResource):
                 'creation_time': str(comment.creation_time),
                 'content': comment.content,
                 'comment_id': str(comment.id)
-            } for comment in comments]
+            } for comment in comments],
+            'image_names': [{
+                'image_name': image
+            } for image in post.image_name]
         })
 
     @jwt_required
@@ -110,13 +113,32 @@ class PostContent(BaseResource):
 
         author = AccountModel.objects(email=get_jwt_identity()).first()
 
-        content = request.json['content']
-        title = request.json['title']
-        category_int = request.json['category']
-        category = CategoryModel.objects(id=category_int).first()
+        if author != post.owner:
+            return Response('', 403)
 
-        if author == post.owner:
-            post.update(content=content, title=title, category=category)
+        new_title = request.form['title']
+        new_content = request.form['content']
+        new_category_int = request.form['category']
+        new_images = request.files.getlist("files")
+
+        names=[]
+
+        if new_images:
+            post.update(image_name=None)
+            for image in new_images:
+                extension = image.filename.split('.')[-1]
+                image_name = '{}.{}'.format(str(uuid4()), extension)
+
+                image.save('./static/img/{0}'.format(image_name))
+                names.append(image_name)
+
+        category = CategoryModel.objects(id=new_category_int).first()
+
+        post.update(title=new_title, content=new_content, category=category, image_name=names)
+
+        return Response('success', 200)
+
+
 
 
 
