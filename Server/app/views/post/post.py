@@ -11,38 +11,29 @@ from app.models.post import *
 api = Api(Blueprint(__name__, __name__))
 
 
-@api.resource('/image')
-class Image(BaseResource):
+@api.resource('/post')
+class Post(BaseResource):
     @jwt_required
     def post(self):
+        content = request.form['content']
+        title = request.form['title']
         images = request.files.getlist("files[]")
+        category_int = request.form['category']
+
         names = []
 
         for image in images:
             extension = image.filename.split('.')[-1]
             image_name = '{}.{}'.format(str(uuid4()), extension)
 
-            image.save('./static/img/{0}'.format(image.filename))
+            image.save('./static/img/{0}'.format(image_name))
             names.append(image_name)
 
-        return names, 201
-
-
-@api.resource('/post')
-class Post(BaseResource):
-    @jwt_required
-    @json_required({'title': str, 'content': str, 'category': int, 'image_names': list})
-    def post(self):
-
-        title = request.json['title']
-        content = request.json['content']
-        category_int = int(request.json['category'])
-        image_names = request.json['image_names']
-
         category = CategoryModel.objects(id=category_int).first()
-        user = AccountModel.objects(email=get_jwt_identity()).first()
 
-        post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=image_names).save()
+        user = AccountModel.objects(email=get_jwt_identity()).first()
+        
+        post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=names).save()
         return str(post.id)
 
     def get(self):
@@ -107,8 +98,25 @@ class PostContent(BaseResource):
 
         return Response('fail', 401)
 
-    def patch(self):
+    @jwt_required
+    def patch(self, post_id):
         """
         게시물 수정
         """
+        post = PostModel.objects(id=post_id).first()
+
+        if not post:
+            return Response('', 204)
+
+        author = AccountModel.objects(email=get_jwt_identity()).first()
+
+        content = request.json['content']
+        title = request.json['title']
+        category_int = request.json['category']
+        category = CategoryModel.objects(id=category_int).first()
+
+        if author == post.owner:
+            post.update(content=content, title=title, category=category)
+
+
 
