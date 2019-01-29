@@ -1,4 +1,3 @@
-from flask import Flask
 from flask import Response, request, Blueprint, jsonify
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity, jwt_required
@@ -46,7 +45,8 @@ class Post(BaseResource):
             'content': postContent.content[:20],
             'title': postContent.title,
             'category': postContent.category.id,
-            'author': postContent.owner.name
+            'author': postContent.owner.name,
+            'reaction': postContent.reaction.count()
         } for postContent in PostModel.objects(category=category).skip((page-1)*20).limit(20)])
 
 
@@ -71,11 +71,13 @@ class PostContent(BaseResource):
             'owner_name': post.owner.name,
             'owner_id': str(post.owner.id),
             'category': post.category.id,
+            'reaction': len(post.reaction),
             'comments': [{
                 'author': comment.owner.name,
                 'creation_time': str(comment.creation_time),
                 'content': comment.content,
-                'comment_id': str(comment.id)
+                'comment_id': str(comment.id),
+                'reaction': len(comment.reaction)
             } for comment in comments],
             'image_names': [{
                 'image_name': image

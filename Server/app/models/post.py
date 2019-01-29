@@ -22,7 +22,7 @@ class PostModel(Document):
     title = StringField(required=True)
     content = StringField(required=True)
     category = ReferenceField(CategoryModel, default=0)
-
+    reaction = ListField(StringField())
     image_name = ListField(StringField())
 
 
@@ -34,4 +34,5 @@ class CommentModel(Document):
     creation_time = DateTimeField(required=True, default=datetime.now())
     owner = ReferenceField(AccountModel, required=True)
     content = StringField(required=True)
+    reaction = ListField(StringField())
 

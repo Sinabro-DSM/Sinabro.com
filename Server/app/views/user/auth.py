@@ -1,7 +1,7 @@
 from flask import request, Response, Blueprint
 import uuid
 from flask_restful import Api
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required, get_jwt_identity
 from flasgger import swag_from
 
 from app.views import BaseResource
@@ -42,5 +42,20 @@ class Auth(BaseResource):
         else:
             return Response('login failed', 401)
 
+
+@api.resource('/refresh')
+class RefreshToken(BaseResource):
+    @jwt_refresh_token_required
+    def post(self):
+        token = RefreshTokenModel.objects(token_uuid=get_jwt_identity()).first()
+
+        if not token:
+            return Response('', 401)
+        if token.token_owner.id.pw != token.pwd_snapshot:
+            return Response('', 205)
+
+        return {
+            'access_token': create_access_token(token.token_owner.id)
+        }, 200
 
 

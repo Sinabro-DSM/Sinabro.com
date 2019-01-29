@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import Response, request, Blueprint, g
+from flask import Response, request, Blueprint
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from uuid import uuid4
@@ -19,21 +18,56 @@ class Comment(BaseResource):
 
         post = PostModel.objects(id=post_id).first()
         user = AccountModel.objects(email=get_jwt_identity()).first()
+        if not user:
+            return Response('', 401)
 
         if not post:
-            return Response('post not exist', 404)
+            return Response('post not exist', 204)
 
         content = request.json['content']
 
         comment = CommentModel(content=content, owner=user, post=post).save()
 
-        return Response('success', 201)
+        return Response(str(comment.id), 201)
 
-    def delete(self, post_id: str):
+
+@api.resource(('/post/<post_id>/comment/<comment_id>'))
+class CommentDetail(BaseResource):
+    @jwt_required
+    def delete(self, post_id, comment_id):
         """
         댓글 삭제
         """
-        post = PostModel.objects(id=post_id).first()
-        if not post:
-            return Response('', 410)
+        comment = CommentModel.objects(id=comment_id).first()
+        user = AccountModel.objects(email=get_jwt_identity()).first()
+        if not user:
+            return Response('', 401)
 
+        if not comment:
+            return Response('', 204)
+
+        if user != comment.owner:
+            return Response('', 403)
+
+        comment.delete()
+
+        return Response('', 200)
+
+    @jwt_required
+    def patch(self, post_id, comment_id):
+        user = AccountModel.objects(email=get_jwt_identity()).first()
+        comment = CommentModel.objects(id=comment_id).first()
+
+        if not user:
+            return Response('', 401)
+
+        if not comment:
+            return Response('', 204)
+
+        if user != comment.owner:
+            return Response('', 403)
+        content = request.json['content']
+
+        comment.update(content=content)
+
+        return Response('', 200)

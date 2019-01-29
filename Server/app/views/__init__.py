@@ -99,9 +99,10 @@ class Router(object):
         app.register_error_handler(Exception, exception_handler)
 
         from app.views.user import signup, auth, account
-        from app.views.post import post, comment
+        from app.views.post import post, comment, reaction
         app.register_blueprint(signup.api.blueprint)
         app.register_blueprint(auth.api.blueprint)
         app.register_blueprint(account.api.blueprint)
         app.register_blueprint(post.api.blueprint)
         app.register_blueprint(comment.api.blueprint)
+        app.register_blueprint(reaction.api.blueprint)
