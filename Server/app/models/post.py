@@ -21,7 +21,7 @@ class PostModel(Document):
     owner = ReferenceField(AccountModel)
     title = StringField(required=True)
     content = StringField(required=True)
-    category = ReferenceField(CategoryModel, default=0)
+    category = ReferenceField(CategoryModel)
     reaction = ListField(StringField())
     image_name = ListField(StringField())
 
