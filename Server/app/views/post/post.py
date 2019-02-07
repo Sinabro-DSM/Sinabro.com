@@ -16,7 +16,7 @@ class Post(BaseResource):
     def post(self):
         content = request.form['content']
         title = request.form['title']
-        images = request.files.getlist("files[]")
+        images = request.files.getlist('files[]')
         category_int = request.form['category']
 
         names = []
@@ -31,7 +31,7 @@ class Post(BaseResource):
         category = CategoryModel.objects(id=category_int).first()
 
         user = AccountModel.objects(email=get_jwt_identity()).first()
-        
+
         post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=names).save()
         return str(post.id)
 
@@ -46,8 +46,8 @@ class Post(BaseResource):
             'title': postContent.title,
             'category': postContent.category.id,
             'author': postContent.owner.name,
-            'reaction': postContent.reaction.count()
-        } for postContent in PostModel.objects(category=category).skip((page-1)*20).limit(20)])
+            'reaction': len(postContent.reaction)
+        } for postContent in PostModel.objects(category=category).skip((page - 1) * 20).limit(20)])
 
 
 @api.resource('/post/<post_id>')
@@ -123,7 +123,7 @@ class PostContent(BaseResource):
         new_category_int = request.form['category']
         new_images = request.files.getlist("files")
 
-        names=[]
+        names = []
 
         if new_images:
             post.update(image_name=None)
@@ -139,8 +139,3 @@ class PostContent(BaseResource):
         post.update(title=new_title, content=new_content, category=category, image_name=names)
 
         return Response('success', 200)
-
-
-
-
-

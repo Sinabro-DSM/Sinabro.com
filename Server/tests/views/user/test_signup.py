@@ -1,31 +1,39 @@
 from tests.views import TestBase
 
-from app.models.account import TempAccountModel
-import ujson
+from app.models.account import TempAccountModel, AccountModel
+from uuid import uuid4
 
 
 class TestSignup(TestBase):
     def setUp(self):
         super(TestSignup, self).setUp()
 
+        self.test_email = 'rsy011203@gmail.com'
+
     def tearDown(self):
         TempAccountModel.objects.delete()
+        AccountModel.objects.delete()
 
         super(TestSignup, self).tearDown()
 
     def testSignup(self):
-        res = self.json_request(self.client.post, '/auth', data={'email': self.email, 'pwd': self.pwd})
+        res = self.json_request(self.client.post, '/signup',
+                                data={'email': self.test_email, 'pwd': self.pwd, 'name': self.name, 'isAdmin': self.isAdmin})
 
         self.assertEqual(res.status_code, 200)
 
-        data = ujson.load(self.decode_data(res))
-        self.assertIsInstance(data, dict)
+        certify_url = TempAccountModel.objects(email=self.test_email).first().certify_uri
 
-
-        #Exception test
-
-        res = self.json_request(self.client.post, '/auth', data={'email': 'asdf', 'pwd': self.pwd})
+        res = self.json_request(self.client.get, '/certify/{}'.format(certify_url), data=None)
         self.assertEqual(res.status_code, 201)
 
-        res = self.json_request(self.client.post, '/auth', data={'email': self.email, 'pwd': 'asdf'})
-        self.assertEqual(res.status_code, 401)
+         #Exception test
+
+        res = self.json_request(self.client.post, '/signup',
+                                data={'email': self.test_email, 'pwd': self.pwd, 'name': self.name,
+                                      'isAdmin': self.isAdmin})
+        self.assertEqual(res.status_code, 409)
+
+        certify_url = uuid4()
+        res = self.json_request(self.client.get, '/certify/{}'.format(certify_url), data=None)
+        self.assertEqual(res.status_code, 404)
