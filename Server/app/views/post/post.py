@@ -39,7 +39,7 @@ class Post(BaseResource):
         page = int(request.args['page'])
         category = request.args['category']
 
-        return jsonify([{
+        return jsonify([ㅇ{
             'post_id': str(postContent.id),
             'creation_time': str(postContent.creation_time),
             'content': postContent.content[:20],

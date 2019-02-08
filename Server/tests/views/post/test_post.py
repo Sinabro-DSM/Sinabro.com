@@ -1,10 +1,11 @@
 from tests.views import TestBase
-import ujson
 
 
 class TestPost(TestBase):
     def setUp(self):
         super(TestPost, self).setUp()
+        self.create_fake_account()
+        self.get_tokens()
 
     def tearDown(self):
         super(TestPost, self).tearDown()
@@ -18,10 +19,10 @@ class TestPost(TestBase):
                                 })
         self.assertEqual(res.status_code, 200)
 
-        res = self.request(self.client.get, '/post', query_string={'page': 1, 'category': 12})
+        res = self.client.get('/post', query_string={'page': 1, 'category': 12})
 
         self.assertEqual(res.status_code, 200)
 
-        data = ujson.loads(self.decode_data(res))
+        data = res.get_json()
+        print(data)
         self.assertIsInstance(data, list)
-        post = data[0][0]

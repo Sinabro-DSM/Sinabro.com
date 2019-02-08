@@ -47,7 +47,6 @@ class Signup(BaseResource):
             body.attach(msg)
             smtp.sendmail('rsy011203@gmail.com', email, msg=body.as_string())
             smtp.quit()
-            print("성공")
 
             return Response('', 200)
 

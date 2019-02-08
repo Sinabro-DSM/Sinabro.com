@@ -1,4 +1,4 @@
-from flask import request, Response, Blueprint
+from flask import request, Response, Blueprint, jsonify
 import uuid
 from flask_restful import Api
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_refresh_token_required, get_jwt_identity
@@ -35,10 +35,10 @@ class Auth(BaseResource):
         user = AccountModel.objects(email=email).first()
 
         if user and user.pwd == pwd:
-            return {
-                'access_token': create_access_token(user.email),
-                'refresh_token': create_refresh_token(generate_refresh_token(user))
-            }, 200
+            return jsonify(
+                access_token=create_access_token(user.email),
+                refresh_token=create_refresh_token(generate_refresh_token(user))
+            )
         else:
             return Response('login failed', 401)
 
