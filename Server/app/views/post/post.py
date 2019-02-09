@@ -33,13 +33,13 @@ class Post(BaseResource):
         user = AccountModel.objects(email=get_jwt_identity()).first()
 
         post = PostModel(owner=user, title=title, content=content, category=category.id, image_name=names).save()
-        return str(post.id)
+        return jsonify({'post_id': str(post.id)})
 
     def get(self):
         page = int(request.args['page'])
         category = request.args['category']
 
-        return jsonify([ㅇ{
+        return jsonify([{
             'post_id': str(postContent.id),
             'creation_time': str(postContent.creation_time),
             'content': postContent.content[:20],
@@ -79,7 +79,7 @@ class PostContent(BaseResource):
                 'comment_id': str(comment.id),
                 'reaction': len(comment.reaction)
             } for comment in comments],
-            'image_names': [{
+            'images': [{
                 'image_name': image
             } for image in post.image_name]
         })
@@ -93,11 +93,13 @@ class PostContent(BaseResource):
         if not post:
             return Response('', 410)
 
-        author = AccountModel.objects(email=get_jwt_identity()).first()
+        user = AccountModel.objects(email=get_jwt_identity()).first()
+        if not user:
+            return Response('', 401)
 
         # 삭제요청자
 
-        if author == post.owner:
+        if user == post.owner:
             post.delete()
             return Response("success", 200)
 

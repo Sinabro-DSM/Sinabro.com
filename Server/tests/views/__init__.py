@@ -3,7 +3,7 @@ from unittest import TestCase
 from app import create_app
 from config import Config
 from app.models.account import AccountModel, RefreshTokenModel
-from app.models.post import PostModel
+from app.models.post import PostModel, CategoryModel
 
 
 class TestBase(TestCase):
@@ -13,10 +13,21 @@ class TestBase(TestCase):
         self.pwd = 'sadasd'
         self.name = 'sinabrodotcom'
         self.isAdmin = False
+        self.category_name = 'python'
+        self.category_id = 1
+        self.title = 'title for tmp post'
+        self.content = 'content for tmp post'
+        self.reaction = 2
 
         self.client = self.app.test_client()
 
         super(TestBase, self).__init__(*args, **kwargs)
+
+    def tearDown(self):
+        AccountModel.objects.delete()
+        RefreshTokenModel.objects.delete()
+        PostModel.objects.delete()
+        CategoryModel.objects.delete()
 
     def create_fake_account(self):
         AccountModel(email=self.email, pwd=self.pwd, name=self.name, isAdmin=False).save()
@@ -30,11 +41,6 @@ class TestBase(TestCase):
     def decode_data(self, res):
         return res.data.decode()
 
-    def tearDown(self):
-        AccountModel.objects.delete()
-        RefreshTokenModel.objects.delete()
-        PostModel.objects.delete()
-
     def json_request(self, method, target_url, token, *args, **kwargs):
         data = kwargs.pop('data')
 
@@ -43,3 +49,17 @@ class TestBase(TestCase):
             json=data if data else None,
             headers={'Authorization': token},
             *args, **kwargs)
+
+    def create_fake_category(self):
+        CategoryModel(name=self.category_name, id=self.category_id).save()
+
+    def create_fake_post(self):
+        res = self.client.post('/post', content_type='multipart/form-data',
+                               headers={'Authorization': self.access_token},
+                               data={
+                                   'title': self.title,
+                                   'content': self.content,
+                                   'category': self.category_id
+                               })
+        self.post_id = res.json['post_id']
+
