@@ -2,16 +2,19 @@ from flask import Response, request, Blueprint, jsonify
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from uuid import uuid4
+from flasgger import swag_from
 
 from app.views import BaseResource, json_required
 from app.models.account import *
 from app.models.post import *
+from app.docs.post.post import POST, POSTCONTENT
 
 api = Api(Blueprint(__name__, __name__))
 
 
 @api.resource('/post')
 class Post(BaseResource):
+    @swag_from(POST)
     @jwt_required
     def post(self):
         content = request.form['content']
@@ -52,6 +55,7 @@ class Post(BaseResource):
 
 @api.resource('/post/<post_id>')
 class PostContent(BaseResource):
+    @swag_from(POSTCONTENT)
     def get(self, post_id):
         """
         게시물 상세 정보
