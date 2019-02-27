@@ -1,5 +1,5 @@
 from tests.views import TestBase
-
+from uuid import uuid4
 
 class TestPost(TestBase):
     def setUp(self):
@@ -53,6 +53,8 @@ class TestPost(TestBase):
 
         res = self.client.delete('/post/{0}'.format(self.post_id), headers={'Authorization': self.access_token})
         self.assertEqual(res.status_code, 200)
+
+
 
 
 

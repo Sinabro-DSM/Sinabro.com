@@ -3,7 +3,7 @@ from unittest import TestCase
 from app import create_app
 from config import Config
 from app.models.account import AccountModel, RefreshTokenModel
-from app.models.post import PostModel, CategoryModel
+from app.models.post import PostModel, CategoryModel, CommentModel
 
 
 class TestBase(TestCase):
@@ -28,6 +28,7 @@ class TestBase(TestCase):
         RefreshTokenModel.objects.delete()
         PostModel.objects.delete()
         CategoryModel.objects.delete()
+        CommentModel.objects.delete()
 
     def create_fake_account(self):
         AccountModel(email=self.email, pwd=self.pwd, name=self.name, isAdmin=False).save()

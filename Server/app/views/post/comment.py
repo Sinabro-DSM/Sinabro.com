@@ -1,4 +1,4 @@
-from flask import Response, request, Blueprint
+from flask import Response, request, Blueprint, jsonify
 from flask_restful import Api
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from uuid import uuid4
@@ -28,7 +28,7 @@ class Comment(BaseResource):
 
         comment = CommentModel(content=content, owner=user, post=post).save()
 
-        return Response(str(comment.id), 201)
+        return jsonify({'comment_id': str(comment.id)})
 
 
 @api.resource(('/post/<post_id>/comment/<comment_id>'))
