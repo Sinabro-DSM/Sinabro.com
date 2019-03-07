@@ -122,7 +122,7 @@ class PostContent(BaseResource):
         author = AccountModel.objects(email=get_jwt_identity()).first()
 
         if author != post.owner:
-            return Response('', 403)
+            return Response('', 401)
 
         new_title = request.form['title']
         new_content = request.form['content']
