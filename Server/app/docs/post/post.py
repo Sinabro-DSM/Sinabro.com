@@ -48,34 +48,20 @@ POST = {
     }
 }
 
-POSTCONTENT = {
-    'tags': ['게시물'],
-    'descriptions': '등록된 게시물 조작 & 댓글 조작 API',
+POSTCONTENT_GET = {
+    'tags': ['게시물 정보 확인 & 댓글 저장'],
+    'descriptions': '등록된 게시물 조작 API',
     'parameters': [
         {
-            'name': 'comment',
-            'description': '게시물에 등록할 댓글',
+            'name': 'post',
+            'description': '게시물 확인',
             'in': 'json',
             'type': 'str',
             'required': True
         },
         {
-            'name': 'author',
-            'description': '게시물 및 댓글의 주인',
-            'in': 'json',
-            'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'delete',
-            'description': '게시물 삭제',
-            'in': 'json',
-            'type': 'str',
-            'required': True
-        },
-        {
-            'name': 'patch',
-            'description': '게시물 수정',
+            'name': 'comments',
+            'description': '게시물 댓글 저장',
             'in': 'json',
             'type': 'str',
             'required': True
@@ -83,10 +69,78 @@ POSTCONTENT = {
     ],
     'responses': {
         '201': {
-            'description': '게시물 수정 완료'
+            'description': '해당 게시물에 댓글저장완료'
+        },
+        '400': {
+            'description': '올바른 접근이 아닙니다. 로그인을 먼저 해주세요'
+        }
+    }
+}
+
+POSTCONTENT_DELETE = {
+    'tags': ['게시글 삭제'],
+    'descriptions': '등록된 게시물 삭제 API',
+    'parameters': [
+        {
+            'name': 'post',
+            'description': '삭제 게시물 확인',
+            'in': 'json',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'user',
+            'description': '삭제요청자 권한확인',
+            'in': 'json',
+            'type': 'str',
+            'required': True
+        },
+    ],
+    'responses': {
+        '201': {
+            'description': '해당 게시물 삭제'
         },
         '401': {
-            'description': '게시물 조작 권한이 없습니다.'
+            'description': '삭제권한이 없습니다.'
+        }
+    }
+}
+
+POSTCONTENT_PATCH = {
+    'tags': ['해당 게시글 업데이트'],
+    'descriptions': '등록된 게시물 수정 API',
+    'parameters': [
+        {
+            'name': 'post',
+            'description': '수정할 게시물 확인',
+            'in': 'json',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'author',
+            'description': '수정 요청자 권한확인',
+            'in': 'json',
+            'type': 'str',
+            'required': True
+        },
+        {
+            'name': 'category',
+            'description': '카테고리 확인',
+            'in': 'json',
+            'type': 'str',
+            'required': True
+        },
+    ],
+    'responses': {
+        '200': {
+            'description': '해당 게시물 업데이트 성공'
+        },
+        '204': {
+            'description': '게시물이 존재하지않음'
+        },
+        '401': {
+            'description': '수정권한 없음'
         }
     }
 }
