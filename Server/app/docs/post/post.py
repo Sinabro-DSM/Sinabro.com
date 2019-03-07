@@ -37,7 +37,15 @@ POST = {
             'type': 'str',
             'required': True
         }
-    ]
+    ],
+    'responses': {
+        '201': {
+            'description': '게시물등록완료'
+        },
+        '400': {
+            'description': '올바른 접근이 아닙니다. 로그인을 먼저 해주세요'
+        }
+    }
 }
 
 POSTCONTENT = {
@@ -72,5 +80,13 @@ POSTCONTENT = {
             'type': 'str',
             'required': True
         },
-    ]
+    ],
+    'responses': {
+        '201': {
+            'description': '게시물 수정 완료'
+        },
+        '401': {
+            'description': '게시물 조작 권한이 없습니다.'
+        }
+    }
 }
